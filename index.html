@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 1st Anniversary, My Love! 💕</title>
+  
+  <!-- Romantic & Clean Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #fff9fb;
+      --pink-soft: #fce7f3;
+      --pink-primary: #f472b6;
+      --pink-deep: #db2777;
+      --rose-dark: #831843;
+      --white: #ffffff;
+      --shadow-pink: rgba(236, 72, 153, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff5f8 0%, #ffe4ec 50%, #fff0f5 100%);
+      color: #552336;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+
+    /* Special Intro Loading Screen */
+    #intro-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #250917 0%, #0d0208 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #intro-loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loader-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: floatLoader 3s ease-in-out infinite;
+      padding: 1rem;
+    }
+
+    @keyframes floatLoader {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .loader-heart-wrapper {
+      position: relative;
+      width: 95px;
+      height: 95px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .loader-heart-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(244, 114, 182, 0.35);
+      animation: pulseRipple 1.6s ease-out infinite;
+    }
+
+    @keyframes pulseRipple {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    .loader-heart-icon {
+      font-size: 3.6rem;
+      animation: heartBeat 1.2s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(244, 114, 182, 0.85));
+      user-select: none;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.22); }
+      50% { transform: scale(0.96); }
+      70% { transform: scale(1.16); }
+    }
+
+    .loader-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.3rem;
+      color: #ffd6e7;
+      text-shadow: 0 0 15px rgba(244, 114, 182, 0.65);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .loader-bar-bg {
+      width: 220px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .loader-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #f472b6, #ec4899, #ffd1e3);
+      border-radius: 10px;
+      animation: fillProgress 1.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes fillProgress {
+      0% { width: 0%; }
+      60% { width: 75%; }
+      100% { width: 100%; }
+    }
+
+    .loader-sub {
+      font-size: 0.85rem;
+      color: rgba(255, 214, 231, 0.85);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Floating Hearts Background */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-bg {
+      position: absolute;
+      bottom: -10vh;
+      color: rgba(244, 114, 182, 0.4);
+      animation: floatUp 12s linear infinite;
+      user-select: none;
+      filter: drop-shadow(0 2px 5px rgba(255, 105, 180, 0.3));
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-115vh) scale(1.3) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Interactive Sparkle Trail Effect */
+    .sparkle-trail {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 1rem;
+      animation: fadeShrink 0.8s ease-out forwards;
+      user-select: none;
+    }
+
+    @keyframes fadeShrink {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -80%) scale(0.2);
+      }
+    }
+
+    /* Content Layout */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 6rem;
+    }
+
+    /* Header / Hero */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+
+    .tagline {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.4rem;
+      color: var(--pink-deep);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(219, 39, 119, 0.15);
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.02); filter: brightness(1.15); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem;
+      color: var(--rose-dark);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--white);
+      color: var(--pink-deep);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.6rem 1.8rem;
+      border-radius: 50px;
+      box-shadow: 0 8px 20px var(--shadow-pink);
+      border: 1px solid rgba(244, 114, 182, 0.3);
+    }
+
+    /* Counter Card with Black Opacity Background */
+    .counter-section {
+      position: relative;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.78)), url('https://cdn.phototourl.com/member/2026-09-27-51e6a7b3-769f-4f6d-8717-5497e5201aad.jpg') center/cover no-repeat;
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: 2.8rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+    }
+
+    .counter-title {
+      font-size: 1.15rem;
+      color: #ffd1e3;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      font-weight: 600;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .counter-subtitle {
+      font-size: 0.95rem;
+      color: #fce7f3;
+      margin-bottom: 1.8rem;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .timer-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .time-box {
+      background: linear-gradient(145deg, #ffffff, #fff1f6);
+      border: 1.5px solid #ffd1e3;
+      padding: 1.2rem 1.6rem;
+      border-radius: 18px;
+      min-width: 105px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .time-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(244, 114, 182, 0.35);
+    }
+
+    .time-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      line-height: 1.1;
+    }
+
+    .time-label {
+      font-size: 0.85rem;
+      color: #8b556b;
+      margin-top: 5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Spotify Player Section */
+    .spotify-section {
+      margin: 0 auto 3rem;
+      max-width: 720px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid #ffd4e5;
+      padding: 1.2rem;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(219, 39, 119, 0.12);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .spotify-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: var(--pink-deep);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .spotify-player-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .spotify-player-wrap iframe {
+      width: 100%;
+      height: 152px;
+      border: 0;
+      display: block;
+    }
+
+    /* Love Letter Box with Romantic Image Background */
+    .letter-box {
+      position: relative;
+      border-radius: 28px;
+      padding: 3rem 2.2rem;
+      box-shadow: 0 18px 45px rgba(131, 24, 67, 0.18);
+      margin-bottom: 4.5rem;
+      overflow: hidden;
+      border: 2px solid #ffd1e3;
+      background: url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    }
+
+    /* Semi-transparent overlay to ensure contrast */
+    .letter-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 240, 245, 0.88), rgba(255, 228, 236, 0.92));
+      backdrop-filter: blur(4px);
+      z-index: 1;
+    }
+
+    .letter-inner {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 2.8rem 2.2rem;
+      border-radius: 20px;
+      border-left: 6px solid var(--pink-deep);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .letter-inner h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--rose-dark);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .letter-inner p {
+      line-height: 1.9;
+      font-size: 1.1rem;
+      color: #3b1422; /* High contrast for super visible text */
+      font-weight: 450;
+      margin-bottom: 1.3rem;
+    }
+
+    /* Section Headings */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      color: var(--rose-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header p {
+      color: #9d3963;
+      font-size: 1.05rem;
+    }
+
+    /* Polaroids Photo Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem 2rem;
+      margin-bottom: 4.5rem;
+      padding: 1rem 0.5rem;
+    }
+
+    .polaroid {
+      background: #ffffff;
+      padding: 1.1rem 1.1rem 1.6rem;
+      border-radius: 6px;
+      box-shadow: 0 14px 28px rgba(131, 24, 67, 0.1), 0 4px 10px rgba(0, 0, 0, 0.04);
+      text-align: center;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid #fce7f3;
+      cursor: pointer;
+    }
+
+    /* Cute Washi Tape on Top */
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 24px;
+      background: rgba(244, 114, 182, 0.45);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border-left: 2px dashed rgba(255, 255, 255, 0.8);
+      border-right: 2px dashed rgba(255, 255, 255, 0.8);
+      z-index: 2;
+    }
+
+    /* Alternating playful rotation */
+    .polaroid:nth-child(1) { transform: rotate(-2.5deg); }
+    .polaroid:nth-child(2) { transform: rotate(1.8deg); }
+    .polaroid:nth-child(3) { transform: rotate(-1.5deg); }
+    .polaroid:nth-child(4) { transform: rotate(2.2deg); }
+    .polaroid:nth-child(5) { transform: rotate(-2deg); }
+    .polaroid:nth-child(6) { transform: rotate(1.6deg); }
+
+    .polaroid:hover {
+      transform: translateY(-10px) rotate(0deg) scale(1.03);
+      box-shadow: 0 22px 35px rgba(219, 39, 119, 0.24);
+      z-index: 10;
+    }
+
+    .polaroid-img-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      height: 260px;
+      margin-bottom: 1rem;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+
+    .polaroid:hover img {
+      transform: scale(1.06);
+    }
+
+    .polaroid-caption {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--rose-dark);
+      margin-bottom: 0.2rem;
+    }
+
+    .polaroid-date {
+      font-size: 0.78rem;
+      color: #9d3963;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* Celebrate Button */
+    .action-container {
+      text-align: center;
+    }
+
+    .btn-celebrate {
+      background: linear-gradient(135deg, var(--pink-primary), var(--pink-deep));
+      color: var(--white);
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 1.1rem 2.8rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(219, 39, 119, 0.35);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn-celebrate:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(219, 39, 119, 0.55);
+    }
+
+    /* Responsive Mobile Improvements */
+    @media (max-width: 768px) {
+      .content-wrapper {
+        padding: 1.5rem 1rem 4rem;
+      }
+      header {
+        padding: 2rem 0.5rem 1.5rem;
+      }
+      h1 { 
+        font-size: 2.2rem; 
+      }
+      .tagline { 
+        font-size: 1.8rem; 
+      }
+      .date-badge {
+        font-size: 0.85rem;
+        padding: 0.5rem 1.2rem;
+      }
+      .counter-section {
+        padding: 1.8rem 1rem;
+        margin-bottom: 2rem;
+      }
+      .timer-grid {
+        gap: 0.8rem;
+      }
+      .time-box {
+        min-width: 72px;
+        padding: 0.8rem 0.9rem;
+      }
+      .time-number {
+        font-size: 1.8rem;
+      }
+      .time-label {
+        font-size: 0.72rem;
+      }
+      .spotify-section {
+        padding: 1rem 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+      .letter-box { 
+        padding: 1.2rem 0.8rem; 
+        margin-bottom: 3.2rem;
+      }
+      .letter-inner { 
+        padding: 1.6rem 1.2rem; 
+      }
+      .letter-inner h3 {
+        font-size: 1.7rem;
+      }
+      .letter-inner p {
+        font-size: 0.98rem;
+        line-height: 1.75;
+      }
+      .section-header h2 {
+        font-size: 2.1rem;
+      }
+      .gallery-grid { 
+        grid-template-columns: 1fr; 
+        max-width: 330px; 
+        margin: 0 auto 3rem; 
+        gap: 2.5rem;
+      }
+      .polaroid-img-wrapper {
+        height: 230px;
+      }
+      .btn-celebrate {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Special Intro Loading Screen -->
+  <div id="intro-loader">
+    <div class="loader-content">
+      <div class="loader-heart-wrapper">
+        <div class="loader-heart-pulse"></div>
+        <div class="loader-heart-icon">💖</div>
+      </div>
+      <div class="loader-title">Opening Our Love Story...</div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <div class="loader-sub">Happy 1st Anniversary ✨</div>
+    </div>
+  </div>
+
+  <!-- Floating Hearts Background -->
+  <div class="hearts-container" id="hearts-bg"></div>
+
+  <div class="content-wrapper">
+    <!-- Header -->
+    <header>
+      <div class="tagline">Happy 1st Anniversary</div>
+      <h1>My Bae!</h1>
+      <div class="date-badge">✨ 365 Days of Pure Love & Joy ✨</div>
+    </header>
+
+    <!-- 1 Year Counter Section with Black Opacity Background -->
+    <section class="counter-section">
+      <div class="counter-title">365 Days of Loving You</div>
+      <div class="counter-subtitle">One entire year together, and forever to go 💖</div>
+      <div class="timer-grid">
+        <div class="time-box">
+          <div class="time-number" id="days">365</div>
+          <div class="time-label">Days</div>
+        </div>
+        <div class="time-box">
+          <div class="time-number" id="hours">0</div>
+          <div class="time-label">Hours</div>
+        </div>
+        <div class="time-box">
+          <div class="time-number" id="minutes">0</div>
+          <div class="time-label">Minutes</div>
+        </div>
+        <div class="time-box">
+          <div class="time-number" id="seconds">0</div>
+          <div class="time-label">Seconds</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spotify Song (Placed below count days) -->
+    <section class="spotify-section">
+      <div class="spotify-label">🎵 Our Love Song 🎵</div>
+      <div class="spotify-player-wrap">
+        <iframe 
+          src="https://open.spotify.com/embed/album/4XcBixCavHYqmVPCAr2jwN?utm_source=generator" 
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Love Letter Box (Placed above snapshot with image background) -->
+    <section class="letter-box">
+      <div class="letter-inner">
+        <h3>My Dearest Bae,</h3>
+        <p>
+          HIII BABYYYY, happy anniversary 😘🥹
+ang bilis noh isang taon na tayo sana habang tumatagal mas lumalalim yung pag mamahal mo sakin at mas intindihin natin ang isa’t isa, alam kong kaya mong ihandle yung ugali na meron ako kasi alam mo naman yung mood ko paiba iba yk naman na ma attitude ako, pero mahal na mahal na mahal kita,baby. kahit lagi kitang minamaldithan mahal na mahal kita
+iloveyou, baby.
+
+Sana pag may mga away tayo ayusin natin agad kasi pag pinatagal natin lalala lang at mas papahirapan lang natin ang sarili natin, tayo lang naman ang mag kakaintindihan hindi tayo maiintindihan ng ibang tao kasi wala silang alam sa mga pinagdaanan natin. sana piliin natin ang isa’t isa hindi yung mas pinipili nating lumayo o hindi mag usap kapag may mga problema tayo.
+
+Pag may mali akong pinapakita/ginagawa or uncomfortable ka sabihin mo sakin, sasabihin ko din yung ayaw o uncomfy ako na ginagawa mo. mag open ka sakin may nangyaring mali sayo, pag inaway ka nila, hindi natin sila bati. mag open po ikaw sakin ha wag tayong mag secret sa isa’t isa sabi mo nga dapat sakinila tayo may secret hindi sa isa’t isa, kakampi mo’ko sa lahat ng laban na haharapin mo.
+
+Wala pa akong pera o trabaho hindi ko pa kayang bigyan ka ng mga material na bagay, sorry kung letter lang muna sa ngayon. pag successfull na’ko/tayo sana tayo pa din ang mag kasama, sana pag kaya ko/mo na ibigay lahat ikaw parin kasama ko. zai is always here for you, baby kahit anong mangyari.
+
+THANKYOU kasi always mo’kong naiintindihan, always kang andyan pag may problem ako, always kang nakikinig sa mga chika ko, always kang  nakikinig sa mga rants ko kahit, thankyou kasi andyan ka para tulungan akong sa mga problema ko kahit meron ka din, mahal na mahal kita baby.
+
+Stay lang ikaw sakin ha wag mo’kong iiwan, wag ikaw mapapagod na intindihin yung ugaling meron ako, wag na wag ikaw mapapagod kahit lagi tayo nag aaway hehe i love you.💕💗
+ 
+HAPPY 1st ANNIVERSARY BABY, BAE, BABE, HON ILOVEYOUSOOOOOOOOOOOOOOOOOOOOMUCHHHHHHHHH😘🥰😻😍😽🫰🏻
+        </p>
+        <p style="font-family: 'Dancing Script', cursive; font-size: 1.7rem; color: var(--pink-deep); margin-bottom: 0;">
+          Forever & Always,<br>Zai 💕
+        </p>
+      </div>
+    </section>
+
+    <!-- Polaroid Photo Gallery (Snapshots of Us) -->
+    <section>
+      <div class="section-header">
+        <h2>Snapshots of Us</h2>
+        <p>Six of my absolute favorite moments with you</p>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Photo 1 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-94b642e0-8fa2-4d9c-a8a8-103e95fe3dec.jpg" alt="Beach sunset walks" />
+          </div>
+          <div class="polaroid-caption">Love Life ✨</div>
+          <div class="polaroid-date">Where time stood still</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-8b9b8625-6245-41c4-9c12-b68e9faaa250.jpg" alt="Holding hands" />
+          </div>
+          <div class="polaroid-caption">Never Letting Go 🤝</div>
+          <div class="polaroid-date">My favorite hand to hold</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-3a35307e-be55-46e6-8892-6465a2856252.jpg" alt="Laughing together" />
+          </div>
+          <div class="polaroid-caption">Laughing With You 😊</div>
+          <div class="polaroid-date">Pure unfiltered joy</div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-1a28ab4d-8b74-447c-8590-30a1d0af53fb.jpg" alt="Coffee and smiles" />
+          </div>
+          <div class="polaroid-caption">Staying with you ☕</div>
+          <div class="polaroid-date">Conversations that last hours</div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-553fba06-4303-4558-8d79-8b277ce5e576.jpg" alt="Road trip fun" />
+          </div>
+          <div class="polaroid-caption">Always with you 🚗</div>
+          <div class="polaroid-date">Singing at the top of our lungs</div>
+        </div>
+
+        <!-- Photo 6 -->
+        <div class="polaroid" onclick="popHeart(event)">
+          <div class="polaroid-img-wrapper">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-069a28de-b82d-446f-8610-b7ac4fd0a380.jpg" alt="Special evening" />
+          </div>
+          <div class="polaroid-caption">Under The Stars 🌙</div>
+          <div class="polaroid-date">Here is to 1 year and forever</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Celebration Button -->
+    <div class="action-container">
+      <button class="btn-celebrate" onclick="triggerCelebration()">
+        <span>Celebrate 1 Year!</span> 💖
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Special Intro Loading Effect Dismissal
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('intro-loader');
+        if (loader) {
+          loader.classList.add('fade-out');
+        }
+      }, 1900);
+    });
+
+    // 1 YEAR COUNTDOWN / COUNTER LOGIC
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+    function updateCounter() {
+      const now = new Date();
+      const diff = now - oneYearAgo;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / 1000 / 60) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // Floating Background Hearts
+    const heartsBg = document.getElementById('hearts-bg');
+    const heartSymbols = ['💗', '🤍', '🌸', '💖', '✨'];
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-bg');
+      heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+      heart.style.animationDuration = Math.random() * 6 + 7 + 's';
+
+      heartsBg.appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
+    }
+    setInterval(createHeart, 500);
+
+    // Mouse & Touch Sparkle Trail Effect
+    let lastSparkleTime = 0;
+    function addSparkle(e) {
+      const now = Date.now();
+      if (now - lastSparkleTime < 65) return;
+      lastSparkleTime = now;
+
+      const sparkle = document.createElement('span');
+      sparkle.classList.add('sparkle-trail');
+      sparkle.innerText = ['✨', '💖', '🌸', '💕'][Math.floor(Math.random() * 4)];
+
+      const x = e.clientX || (e.touches && e.touches[0].clientX);
+      const y = e.clientY || (e.touches && e.touches[0].clientY);
+
+      if (!x || !y) return;
+
+      sparkle.style.left = x + 'px';
+      sparkle.style.top = y + 'px';
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => sparkle.remove(), 800);
+    }
+    window.addEventListener('mousemove', addSparkle);
+    window.addEventListener('touchmove', addSparkle, { passive: true });
+
+    // Click Polaroid Effect (Heart burst at click point)
+    function popHeart(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+      confetti({
+        particleCount: 18,
+        spread: 50,
+        startVelocity: 15,
+        origin: { x, y },
+        shapes: ['circle'],
+        colors: ['#f472b6', '#db2777', '#ffb6c1']
+      });
+    }
+
+    // Celebration Confetti Explosion
+    function triggerCelebration() {
+      confetti({
+        particleCount: 90,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#f472b6', '#db2777', '#fbcfe8', '#ffffff']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 60,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0 },
+          colors: ['#ec4899', '#fce7f3', '#fda4af']
+        });
+        confetti({
+          particleCount: 60,
+          angle: 120,
+          spread: 60,
+          origin: { x: 1 },
+          colors: ['#ec4899', '#fce7f3', '#fda4af']
+        });
+      }, 250);
+    }
+  </script>
+</body>
+</html>
